@@ -1,0 +1,378 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SIN ALIF × AURA</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap');
+
+:root{
+ --bg:#08070d;
+ --panel:#12101b;
+ --purple:#9255ff;
+ --light:#c5a3ff;
+ --text:#fff;
+ --muted:#9690a5;
+}
+*{box-sizing:border-box}
+body{
+ margin:0;background:var(--bg);color:var(--text);
+ font-family:Cairo,sans-serif;overflow-x:hidden;
+}
+body:before{
+ content:"";position:fixed;inset:0;z-index:-2;
+ background:
+ radial-gradient(ellipse at 70% 10%,#401b702b,transparent 45%),
+ radial-gradient(ellipse at 10% 70%,#5c24a522,transparent 40%);
+}
+body:after{
+ content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+ opacity:.12;
+ background-image:linear-gradient(#ffffff0b 1px,transparent 1px),
+ linear-gradient(90deg,#ffffff0b 1px,transparent 1px);
+ background-size:45px 45px;
+ mask-image:linear-gradient(to bottom,black,transparent 90%);
+}
+button{font:inherit;cursor:pointer}
+header{
+ height:78px;display:flex;align-items:center;justify-content:space-between;
+ padding:0 7%;border-bottom:1px solid #ffffff12;
+ background:#090810d9;backdrop-filter:blur(20px);
+ position:sticky;top:0;z-index:20;
+}
+.logo{font-size:25px;font-weight:900;letter-spacing:2px}
+.logo span{color:var(--purple)}
+.nav{display:flex;align-items:center;gap:25px}
+.nav a{color:#aaa2b8;text-decoration:none;font-size:13px;transition:.2s}
+.nav a:hover{color:white}
+.btn{
+ border:1px solid #a276ff55;color:white;
+ background:linear-gradient(110deg,#7139d5,#9c5aff);
+ padding:11px 22px;border-radius:10px;font-weight:800;
+ box-shadow:0 0 25px #8d4aff30;transition:.3s;
+}
+.btn:hover{transform:translateY(-3px);box-shadow:0 0 35px #a05aff70}
+.btn.dark{background:#1b1725;border:1px solid #ffffff20;box-shadow:none}
+.hero{
+ max-width:1250px;margin:auto;padding:75px 30px 70px;
+ min-height:590px;display:grid;grid-template-columns:1fr 1fr;
+ align-items:center;gap:25px;
+}
+.eyebrow{
+ display:inline-flex;align-items:center;gap:9px;
+ padding:7px 15px;border:1px solid #9561e955;
+ background:#8e4bff13;border-radius:30px;
+ color:#d5baff;font-size:12px;
+}
+.dot{width:7px;height:7px;background:#b68bff;border-radius:50%;box-shadow:0 0 12px #b68bff}
+.hero h1{font-size:clamp(45px,6vw,75px);line-height:1.2;margin:25px 0 15px;font-weight:900}
+.hero h1 span{
+ background:linear-gradient(90deg,#fff,#b98cff,#7d43ec);
+ background-clip:text;color:transparent;
+}
+.hero p{color:#a9a1b8;line-height:2;font-size:15px;max-width:500px}
+.actions{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap}
+.hero-art{height:440px;position:relative;display:grid;place-items:center}
+.glow{
+ position:absolute;width:340px;height:340px;border-radius:50%;
+ background:#782bff;filter:blur(100px);opacity:.23;
+ animation:glow 4s infinite alternate;
+}
+@keyframes glow{to{transform:scale(1.3);opacity:.4}}
+.orbit{
+ position:absolute;width:355px;height:355px;border:1px solid #b17cff44;
+ border-radius:50%;transform:rotateX(65deg);
+ animation:spin 15s linear infinite;
+}
+.orbit:before{
+ content:"";position:absolute;top:0;left:50%;
+ width:10px;height:10px;background:#d4aaff;border-radius:50%;
+ box-shadow:0 0 20px 7px #9b55ff;
+}
+.orbit.two{width:290px;height:290px;animation-direction:reverse;opacity:.7}
+@keyframes spin{to{transform:rotateX(65deg) rotateZ(360deg)}}
+.game-card{
+ position:relative;width:260px;padding:25px;
+ background:linear-gradient(145deg,#292039,#100d19);
+ border:1px solid #b68aff66;border-radius:24px;
+ box-shadow:0 35px 90px #000b,0 0 55px #8e48ff30;
+ transform:perspective(900px) rotateY(-12deg) rotateX(5deg);
+ animation:float 5s ease-in-out infinite;
+}
+@keyframes float{50%{transform:perspective(900px) rotateY(-5deg) rotateX(0) translateY(-16px)}}
+.card-top{display:flex;justify-content:space-between;color:#c8b2ed;font-size:11px}
+.question-icon{
+ margin:25px auto;width:100px;height:100px;display:grid;place-items:center;
+ font-size:48px;border-radius:25px;
+ background:linear-gradient(145deg,#8c4cff,#3c1d72);
+ box-shadow:0 0 45px #914aff66;
+}
+.game-card h3{text-align:center;font-size:18px}
+.answer{
+ background:#ffffff0a;border:1px solid #ffffff13;border-radius:9px;
+ padding:9px 12px;margin:8px 0;color:#c8c1d5;font-size:11px;
+}
+.answer.active{border-color:#a66aff;background:#8342e32b;color:white}
+.floating{
+ position:absolute;padding:13px 17px;border-radius:12px;
+ background:#211a31;border:1px solid #a274e855;
+ box-shadow:0 15px 40px #0008;font-size:12px;
+ animation:float 4s ease-in-out infinite;
+}
+.f1{top:60px;right:0}.f2{bottom:65px;left:0;animation-delay:1s}
+.section{max-width:1200px;margin:auto;padding:50px 25px}
+.section-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:25px;gap:15px}
+.section-head h2{font-size:27px;margin:0}
+.section-head p{color:var(--muted);font-size:12px;margin:5px 0}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:17px}
+.mode{
+ position:relative;overflow:hidden;padding:25px;
+ background:linear-gradient(145deg,#1b1725,#100e16);
+ border:1px solid #ffffff12;border-radius:17px;transition:.3s;
+}
+.mode:hover{transform:translateY(-7px);border-color:#a06aff88;box-shadow:0 20px 45px #0006}
+.mode:after{
+ content:"";position:absolute;width:130px;height:130px;
+ background:#914bff;filter:blur(90px);opacity:.2;left:-50px;top:-50px;
+}
+.mode-icon{
+ width:52px;height:52px;display:grid;place-items:center;
+ border-radius:14px;background:#8747ee25;
+ border:1px solid #a879ff44;font-size:25px;margin-bottom:20px;
+}
+.mode h3{margin:0 0 8px}.mode p{color:var(--muted);font-size:12px;line-height:2}
+.mode button{margin-top:10px}
+.stats{
+ display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-top:35px;
+}
+.stat{
+ background:#15111e;border:1px solid #ffffff12;
+ border-radius:15px;text-align:center;padding:22px;
+}
+.stat strong{display:block;font-size:29px;color:#c49aff}
+.stat span{color:var(--muted);font-size:11px}
+.leaderboard{
+ background:linear-gradient(135deg,#1b1527,#100e16);
+ border:1px solid #ffffff14;border-radius:18px;padding:25px;
+}
+.player{
+ display:flex;align-items:center;justify-content:space-between;
+ padding:14px 0;border-bottom:1px solid #ffffff10;
+}
+.player:last-child{border:0}
+.player-info{display:flex;align-items:center;gap:12px}
+.avatar{
+ width:38px;height:38px;border-radius:50%;
+ background:linear-gradient(135deg,#8245ed,#302047);
+ display:grid;place-items:center;font-weight:900;
+}
+.points{color:#c29aff;font-weight:800;font-size:13px}
+.cta{
+ margin:30px auto 70px;max-width:1150px;padding:55px 25px;
+ border-radius:22px;text-align:center;position:relative;overflow:hidden;
+ background:linear-gradient(110deg,#281443,#151020,#26143d);
+ border:1px solid #a36cff44;
+}
+.cta:before{content:"";position:absolute;width:300px;height:200px;background:#8d3eff;filter:blur(100px);left:30%;top:-120px;opacity:.4}
+.cta h2{font-size:30px;position:relative}
+.cta p{color:#b0a5c1;position:relative}
+footer{text-align:center;padding:30px;color:#706a7d;border-top:1px solid #ffffff10;font-size:12px}
+.modal{
+ display:none;position:fixed;inset:0;z-index:100;
+ background:#000c;backdrop-filter:blur(12px);
+ align-items:center;justify-content:center;padding:20px;
+}
+.modal.show{display:flex}
+.modal-box{
+ width:100%;max-width:430px;background:#171320;
+ border:1px solid #9562dc66;border-radius:20px;padding:25px;
+ box-shadow:0 20px 80px #000;
+}
+.modal input{
+ width:100%;padding:13px;background:#0c0a11;
+ border:1px solid #ffffff20;border-radius:9px;
+ color:white;margin:8px 0 15px;font:inherit;
+}
+.modal label{font-size:12px;color:#bcb2ce}
+@media(max-width:750px){
+ header{padding:0 18px}.nav{gap:10px}.nav a{display:none}
+ .hero{grid-template-columns:1fr;padding:55px 20px 20px;text-align:center}
+ .hero p{margin:auto}.actions{justify-content:center}
+ .hero-art{height:370px}.game-card{width:235px}
+ .orbit{width:300px;height:300px}
+ .orbit.two{width:250px;height:250px}
+ .f1{right:0}.f2{left:0}
+ .grid{grid-template-columns:1fr}
+ .stats{grid-template-columns:repeat(2,1fr)}
+ .section-head h2{font-size:22px}
+}
+</style>
+</head>
+<body>
+
+<header>
+ <div class="logo">SIN <span>ALIF</span></div>
+ <nav class="nav">
+  <a href="#home">الرئيسية</a>
+  <a href="#modes">أنماط اللعب</a>
+  <a href="#ranking">المتصدرون</a>
+  <a href="#about">عن المنصة</a>
+ </nav>
+ <button class="btn" onclick="openLogin()">GET STARTED</button>
+</header>
+
+<section class="hero" id="home">
+ <div>
+  <div class="eyebrow"><span class="dot"></span> SIN ALIF × AURA COMMUNITY</div>
+  <h1>المنافسة تبدأ<br>من <span>هنا.</span></h1>
+  <p>
+   مرحباً بك في SIN ALIF، منصة التحديات والأسئلة الجماعية.
+   اجمع فريقك، اختبر معلوماتك، نافس اللاعبين، واصنع اسمك في القمة.
+  </p>
+  <div class="actions">
+   <button class="btn" onclick="openLogin()">ابدأ المنافسة ←</button>
+   <button class="btn dark" onclick="document.getElementById('modes').scrollIntoView({behavior:'smooth'})">اكتشف المنصة</button>
+  </div>
+  <div class="stats">
+   <div class="stat"><strong>∞</strong><span>تحديات</span></div>
+   <div class="stat"><strong>24/7</strong><span>منافسة</span></div>
+   <div class="stat"><strong>100%</strong><span>حماس</span></div>
+   <div class="stat"><strong>AURA</strong><span>المجتمع</span></div>
+  </div>
+ </div>
+
+ <div class="hero-art">
+  <div class="glow"></div>
+  <div class="orbit"></div><div class="orbit two"></div>
+  <div class="floating f1">🏆 المركز الأول</div>
+  <div class="floating f2">⚡ +250 نقطة</div>
+  <div class="game-card">
+   <div class="card-top"><span>SIN ALIF</span><span>LIVE CHALLENGE</span></div>
+   <div class="question-icon">⚡</div>
+   <h3>هل أنت مستعد للتحدي؟</h3>
+   <div class="answer active">A. اختبر معلوماتك</div>
+   <div class="answer">B. نافس أصدقاءك</div>
+   <div class="answer">C. اصنع تاريخك</div>
+   <div style="display:flex;justify-content:space-between;color:#a99bbd;font-size:10px;margin-top:18px">
+    <span>ROUND 01</span><span>00:30</span>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="section" id="modes">
+ <div class="section-head">
+  <div><h2>اختر طريقة لعبك</h2><p>ثلاث طرق مختلفة لإثبات أنك الأفضل.</p></div>
+  <span class="eyebrow">GAME MODES</span>
+ </div>
+ <div class="grid">
+  <article class="mode">
+   <div class="mode-icon">⚡</div>
+   <h3>التحدي السريع</h3>
+   <p>ادخل مباشرة إلى عالم الأسئلة. اختبر سرعتك ودقة إجاباتك واجمع النقاط.</p>
+   <button class="btn" onclick="quickGame()">العب الآن</button>
+  </article>
+  <article class="mode">
+   <div class="mode-icon">⚔️</div>
+   <h3>معركة الفرق</h3>
+   <p>كوّن فريقك وواجه المنافسين في جولات حماسية مليئة بالتحديات.</p>
+   <button class="btn dark" onclick="openLogin()">قريباً</button>
+  </article>
+  <article class="mode">
+   <div class="mode-icon">👑</div>
+   <h3>طريق الأساطير</h3>
+   <p>اجمع النقاط وارفع رتبتك ونافس على المراكز الأولى في لوحة المتصدرين.</p>
+   <button class="btn dark" onclick="document.getElementById('ranking').scrollIntoView({behavior:'smooth'})">عرض المتصدرين</button>
+  </article>
+ </div>
+</section>
+
+<section class="section" id="ranking">
+ <div class="section-head">
+  <div><h2>قمة المنافسة</h2><p>هل تستطيع الوصول إلى المركز الأول؟</p></div>
+  <span class="eyebrow">TOP PLAYERS</span>
+ </div>
+ <div class="leaderboard" id="leaders">
+  <div class="player"><div class="player-info"><div class="avatar">1</div><b>Shadow</b></div><span class="points">2,450 PTS</span></div>
+  <div class="player"><div class="player-info"><div class="avatar">2</div><b>Legend</b></div><span class="points">2,100 PTS</span></div>
+  <div class="player"><div class="player-info"><div class="avatar">3</div><b>Phantom</b></div><span class="points">1,850 PTS</span></div>
+ </div>
+ <p style="color:#777085;font-size:11px">هذه أسماء ونتائج توضيحية للعرض التجريبي.</p>
+</section>
+
+<section class="cta" id="about">
+ <div class="eyebrow">YOUR JOURNEY STARTS HERE</div>
+ <h2>مكانك بين الأساطير.</h2>
+ <p>لا تنتظر التحدي... كن أنت التحدي.</p>
+ <button class="btn" onclick="openLogin()">انضم إلى SIN ALIF</button>
+ <p style="margin-top:22px">
+  <a href="https://discord.gg/b-3" style="color:#c5a3ff;text-decoration:none">انضم إلى مجتمع AURA ↗</a>
+ </p>
+</section>
+
+<footer>
+ SIN ALIF × AURA · WHERE LEGENDS COMPETE · © 2026
+</footer>
+
+<div class="modal" id="loginModal">
+ <div class="modal-box">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+   <h2 id="modalTitle">مرحباً بك</h2>
+   <button class="btn dark" onclick="closeLogin()">✕</button>
+  </div>
+  <p style="font-size:12px;color:#aaa">سجل دخولك لتبدأ رحلتك.</p>
+  <label>اسم المستخدم</label>
+  <input id="user" placeholder="Username">
+  <label>كلمة المرور</label>
+  <input id="pass" type="password" placeholder="Password">
+  <button class="btn" style="width:100%" onclick="login()">تسجيل الدخول</button>
+  <button class="btn dark" style="width:100%;margin-top:10px" onclick="register()">إنشاء حساب جديد</button>
+  <p id="message" style="font-size:12px;color:#c6a5ff"></p>
+ </div>
+</div>
+
+<script>
+let users=JSON.parse(localStorage.getItem('sinAlifUsers')||'{}');
+
+function openLogin(){
+ document.getElementById('loginModal').classList.add('show');
+}
+function closeLogin(){
+ document.getElementById('loginModal').classList.remove('show');
+}
+function register(){
+ let u=document.getElementById('user').value.trim();
+ let p=document.getElementById('pass').value;
+ if(u.length<3||p.length<4){
+  message('اسم المستخدم 3 أحرف وكلمة المرور 4 أحرف على الأقل');
+  return;
+ }
+ if(users[u]){
+  message('اسم المستخدم مستخدم مسبقاً');
+  return;
+ }
+ users[u]={password:p,points:0,wins:0};
+ localStorage.setItem('sinAlifUsers',JSON.stringify(users));
+ message('تم إنشاء الحساب التجريبي بنجاح!');
+}
+function login(){
+ let u=document.getElementById('user').value.trim();
+ let p=document.getElementById('pass').value;
+ if(!users[u]||users[u].password!==p){
+  message('بيانات الدخول غير صحيحة');
+  return;
+ }
+ message('أهلاً بك '+u+'! تم تسجيل الدخول تجريبياً.');
+}
+function message(t){
+ document.getElementById('message').textContent=t;
+}
+function quickGame(){
+ openLogin();
+ message('سجل الدخول أولاً لتبدأ التحدي.');
+}
+</script>
+</body>
+</html>
